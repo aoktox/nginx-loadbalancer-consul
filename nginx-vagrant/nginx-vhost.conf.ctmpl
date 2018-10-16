@@ -1,0 +1,14 @@
+upstream nodes {
+        {{range service "webserver"}}server {{.Address}}:{{.Port}} max_fails=3 fail_timeout=60 weight=1;
+        {{else}}server 127.0.0.1:65535; # force a 502{{end}}
+}
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
+        server_name _;
+        location / {
+                proxy_pass http://nodes;
+        }
+}

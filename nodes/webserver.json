@@ -1,0 +1,16 @@
+{
+	"service": {
+		"name": "webserver",
+		"tags": [
+			"nginx"
+		],
+		"port": 80,
+		"check": {
+			"id" : "webserver_up",
+			"name" : "Check nginx status",
+			"http" : "http://localhost",
+			"interval" : "1s",
+			"timeout" : "1s"
+		}
+	}
+}
